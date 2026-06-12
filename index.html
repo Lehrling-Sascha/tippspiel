@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="60">
+    <title>WM 2026 Tippspiel – Rangliste</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.4em;
+            background: linear-gradient(90deg, #f9d423, #ff4e50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .header .subtitle {
+            color: #888;
+            font-size: 1.1em;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: flex-start;
+        }
+
+        /* --- Tabelle --- */
+        .table-section { flex: 1; min-width: 400px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        thead th {
+            background: rgba(255,255,255,0.1);
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #aaa;
+        }
+
+        tbody td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 1.05em;
+        }
+
+        tbody tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .rank { font-weight: bold; font-size: 1.2em; width: 50px; }
+        .rank-1 { color: #ffd700; }
+        .rank-2 { color: #c0c0c0; }
+        .rank-3 { color: #cd7f32; }
+
+        .name { font-weight: 600; }
+        .points { font-weight: bold; color: #4fc3f7; text-align: right; }
+        .trend { text-align: center; font-size: 1.2em; }
+        .trend-up { color: #66bb6a; }
+        .trend-down { color: #ef5350; }
+        .trend-same { color: #888; }
+
+        /* --- Chart --- */
+        .chart-section {
+            flex: 1.2;
+            min-width: 450px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .chart-section h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #ccc;
+            font-weight: 400;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .footer .live-dot {
+            display: inline-block;
+            width: 8px; height: 8px;
+            background: #66bb6a;
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🏆 WM 2026 Tippspiel</h1>
+    <p class="subtitle">Aktuelle Rangliste nach Spieltag 5</p>
+</div>
+
+<div class="container">
+
+    <!-- Rangliste -->
+    <div class="table-section">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tipper</th>
+                    <th style="text-align:center">Trend</th>
+                    <th style="text-align:right">Punkte</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="rank rank-1">1</td>
+                    <td class="name">🥇 MaxPower</td>
+                    <td class="trend trend-up">▲ 2</td>
+                    <td class="points">47</td>
+                </tr>
+                <tr>
+                    <td class="rank rank-2">2</td>
+                    <td class="name">🥈 TorJägerin</td>
+                    <td class="trend trend-down">▼ 1</td>
+                    <td class="points">44</td>
+                </tr>
+                <tr>
+                    <td class="rank rank-3">3</td>
+                    <td class="name">🥉 BVB_Franky</td>
+                    <td class="trend trend-same">● —</td>
+                    <td class="points">41</td>
+                </tr>
+                <tr>
+                    <td class="rank">4</td>
+                    <td class="name">KickQueen</td>
+                    <td class="trend trend-up">▲ 3</td>
+                    <td class="points">39</td>
+                </tr>
+                <tr>
+                    <td class="rank">5</td>
+                    <td class="name">Tippkönig2026</td>
+                    <td class="trend trend-down">▼ 2</td>
+                    <td class="points">36</td>
+                </tr>
+                <tr>
+                    <td class="rank">6</td>
+                    <td class="name">LuckyLars</td>
+                    <td class="trend trend-up">▲ 1</td>
+                    <td class="points">34</td>
+                </tr>
+                <tr>
+                    <td class="rank">7</td>
+                    <td class="name">Strafraum_Susi</td>
+                    <td class="trend trend-down">▼ 3</td>
+                    <td class="points">31</td>
+                </tr>
+                <tr>
+                    <td class="rank">8</td>
+                    <td class="name">Elfmeter_Eddie</td>
+                    <td class="trend trend-same">● —</td>
+                    <td class="points">28</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Punkteverlauf Chart -->
+    <div class="chart-section">
+        <h2>📈 Punkteverlauf</h2>
+        <canvas id="pointsChart"></canvas>
+    </div>
+
+</div>
+
+<div class="footer">
+    <span class="live-dot"></span>
+    Auto-Refresh alle 60 Sekunden &nbsp;|&nbsp;
+    Letztes Update: <span id="timestamp"></span>
+</div>
+
+<script>
+    // Timestamp setzen
+    document.getElementById('timestamp').textContent =
+        new Date().toLocaleString('de-DE', {
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+        });
+
+    // Dummy-Daten für den Punkteverlauf
+    const spieltage = ['ST 1', 'ST 2', 'ST 3', 'ST 4', 'ST 5'];
+
+    const tipper = [
+        { name: 'MaxPower',        data: [8,  18, 27, 38, 47], color: '#ffd700' },
+        { name: 'TorJägerin',      data: [10, 20, 30, 39, 44], color: '#c0c0c0' },
+        { name: 'BVB_Franky',      data: [7,  15, 25, 34, 41], color: '#cd7f32' },
+        { name: 'KickQueen',       data: [5,  12, 20, 30, 39], color: '#4fc3f7' },
+        { name: 'Tippkönig2026',   data: [9,  19, 28, 34, 36], color: '#ff6384' },
+        { name: 'LuckyLars',       data: [6,  13, 21, 28, 34], color: '#66bb6a' },
+        { name: 'Strafraum_Susi',  data: [8,  17, 26, 32, 31], color: '#ff9f40' },
+        { name: 'Elfmeter_Eddie',  data: [4,  10, 17, 23, 28], color: '#9966ff' },
+    ];
+
+    new Chart(document.getElementById('pointsChart'), {
+        type: 'line',
+        data: {
+            labels: spieltage,
+            datasets: tipper.map(t => ({
+                label: t.name,
+                data: t.data,
+                borderColor: t.color,
+                backgroundColor: t.color + '20',
+                borderWidth: 3,
+                pointRadius: 5,
+                pointBackgroundColor: t.color,
+                fill: false,
+                tension: 0.3
+            }))
+        },
+        options: {
+            responsive: true,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#ccc',
+                        font: { size: 13 },
+                        padding: 15,
+                        usePointStyle: true
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: '#aaa', font: { size: 13 } },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#aaa', font: { size: 13 } },
+                    grid: { color: 'rgba(255,255,255,0.08)' },
+                    title: {
+                        display: true,
+                        text: 'Punkte',
+                        color: '#aaa',
+                        font: { size: 14 }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
