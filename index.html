@@ -2,287 +2,194 @@
 <html lang="de">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="60">
-    <title>WM 2026 Tippspiel – Rangliste</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="robots" content="noindex, nofollow">
+    <title>🔒 Tippspiel — Passwort erforderlich</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             color: #e0e0e0;
             min-height: 100vh;
-            padding: 30px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 2.4em;
-            background: linear-gradient(90deg, #f9d423, #ff4e50);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
-        }
-
-        .header .subtitle {
-            color: #888;
-            font-size: 1.1em;
-        }
-
-        .container {
             display: flex;
-            gap: 40px;
-            max-width: 1400px;
-            margin: 0 auto;
-            align-items: flex-start;
+            justify-content: center;
+            align-items: center;
         }
-
-        /* --- Tabelle --- */
-        .table-section { flex: 1; min-width: 400px; }
-
-        table {
+        .login-box {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .login-box h1 { font-size: 2em; margin-bottom: 10px; }
+        .login-box p { color: #888; margin-bottom: 25px; }
+        input[type="password"] {
             width: 100%;
-            border-collapse: collapse;
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        thead th {
-            background: rgba(255,255,255,0.1);
-            padding: 14px 16px;
-            text-align: left;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #aaa;
-        }
-
-        tbody td {
-            padding: 12px 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 1.05em;
-        }
-
-        tbody tr:hover {
-            background: rgba(255,255,255,0.05);
-        }
-
-        .rank { font-weight: bold; font-size: 1.2em; width: 50px; }
-        .rank-1 { color: #ffd700; }
-        .rank-2 { color: #c0c0c0; }
-        .rank-3 { color: #cd7f32; }
-
-        .name { font-weight: 600; }
-        .points { font-weight: bold; color: #4fc3f7; text-align: right; }
-        .trend { text-align: center; font-size: 1.2em; }
-        .trend-up { color: #66bb6a; }
-        .trend-down { color: #ef5350; }
-        .trend-same { color: #888; }
-
-        /* --- Chart --- */
-        .chart-section {
-            flex: 1.2;
-            min-width: 450px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 12px;
-            padding: 20px;
-        }
-
-        .chart-section h2 {
-            text-align: center;
+            padding: 14px 18px;
+            font-size: 1.1em;
+            border: 2px solid #444;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            color: white;
             margin-bottom: 15px;
-            color: #ccc;
-            font-weight: 400;
+            outline: none;
         }
-
-        /* --- Footer --- */
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #555;
+        input[type="password"]:focus { border-color: #f9d423; }
+        button {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #f9d423, #ff4e50);
+            color: #1a1a2e;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover { opacity: 0.9; }
+        .error {
+            color: #ef5350;
+            margin-top: 15px;
+            display: none;
+        }
+        .remember {
+            margin: 10px 0 20px;
+            color: #888;
             font-size: 0.9em;
         }
-
-        .footer .live-dot {
-            display: inline-block;
-            width: 8px; height: 8px;
-            background: #66bb6a;
-            border-radius: 50%;
-            margin-right: 6px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        .remember input { margin-right: 6px; }
+        .loading {
+            display: none;
+            color: #f9d423;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-
-<div class="header">
-    <h1>🏆 WM 2026 Tippspiel</h1>
-    <p class="subtitle">Aktuelle Rangliste nach Spieltag 5</p>
-</div>
-
-<div class="container">
-
-    <!-- Rangliste -->
-    <div class="table-section">
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Tipper</th>
-                    <th style="text-align:center">Trend</th>
-                    <th style="text-align:right">Punkte</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="rank rank-1">1</td>
-                    <td class="name">🥇 MaxPower</td>
-                    <td class="trend trend-up">▲ 2</td>
-                    <td class="points">47</td>
-                </tr>
-                <tr>
-                    <td class="rank rank-2">2</td>
-                    <td class="name">🥈 TorJägerin</td>
-                    <td class="trend trend-down">▼ 1</td>
-                    <td class="points">44</td>
-                </tr>
-                <tr>
-                    <td class="rank rank-3">3</td>
-                    <td class="name">🥉 BVB_Franky</td>
-                    <td class="trend trend-same">● —</td>
-                    <td class="points">41</td>
-                </tr>
-                <tr>
-                    <td class="rank">4</td>
-                    <td class="name">KickQueen</td>
-                    <td class="trend trend-up">▲ 3</td>
-                    <td class="points">39</td>
-                </tr>
-                <tr>
-                    <td class="rank">5</td>
-                    <td class="name">Tippkönig2026</td>
-                    <td class="trend trend-down">▼ 2</td>
-                    <td class="points">36</td>
-                </tr>
-                <tr>
-                    <td class="rank">6</td>
-                    <td class="name">LuckyLars</td>
-                    <td class="trend trend-up">▲ 1</td>
-                    <td class="points">34</td>
-                </tr>
-                <tr>
-                    <td class="rank">7</td>
-                    <td class="name">Strafraum_Susi</td>
-                    <td class="trend trend-down">▼ 3</td>
-                    <td class="points">31</td>
-                </tr>
-                <tr>
-                    <td class="rank">8</td>
-                    <td class="name">Elfmeter_Eddie</td>
-                    <td class="trend trend-same">● —</td>
-                    <td class="points">28</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="login-box" id="loginBox">
+        <h1>🏆🔒</h1>
+        <p>Dieses Tippspiel ist passwortgeschützt.</p>
+        <input type="password" id="pwd" placeholder="Passwort eingeben..."
+               autofocus onkeydown="if(event.key==='Enter')decrypt()">
+        <div class="remember">
+            <label><input type="checkbox" id="remember" checked>
+            30 Tage merken</label>
+        </div>
+        <button onclick="decrypt()">Entsperren</button>
+        <p class="error" id="error">❌ Falsches Passwort</p>
+        <p class="loading" id="loading">🔓 Entschlüssele...</p>
     </div>
 
-    <!-- Punkteverlauf Chart -->
-    <div class="chart-section">
-        <h2>📈 Punkteverlauf</h2>
-        <canvas id="pointsChart"></canvas>
-    </div>
+    <script>
+        const PAYLOAD = {"salt": "DAVnbfJPng9Z+3rq1Kvx2+rOkr4KSslVml99+PLJg9c=", "iv": "tCQt3A1jSOB1mvsb", "ct": "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", "iter": 600000};
+        const STORAGE_KEY = 'tippspiel_auth';
 
-</div>
-
-<div class="footer">
-    <span class="live-dot"></span>
-    Auto-Refresh alle 60 Sekunden &nbsp;|&nbsp;
-    Letztes Update: <span id="timestamp"></span>
-</div>
-
-<script>
-    // Timestamp setzen
-    document.getElementById('timestamp').textContent =
-        new Date().toLocaleString('de-DE', {
-            day: '2-digit', month: '2-digit', year: 'numeric',
-            hour: '2-digit', minute: '2-digit'
-        });
-
-    // Dummy-Daten für den Punkteverlauf
-    const spieltage = ['ST 1', 'ST 2', 'ST 3', 'ST 4', 'ST 5'];
-
-    const tipper = [
-        { name: 'MaxPower',        data: [8,  18, 27, 38, 47], color: '#ffd700' },
-        { name: 'TorJägerin',      data: [10, 20, 30, 39, 44], color: '#c0c0c0' },
-        { name: 'BVB_Franky',      data: [7,  15, 25, 34, 41], color: '#cd7f32' },
-        { name: 'KickQueen',       data: [5,  12, 20, 30, 39], color: '#4fc3f7' },
-        { name: 'Tippkönig2026',   data: [9,  19, 28, 34, 36], color: '#ff6384' },
-        { name: 'LuckyLars',       data: [6,  13, 21, 28, 34], color: '#66bb6a' },
-        { name: 'Strafraum_Susi',  data: [8,  17, 26, 32, 31], color: '#ff9f40' },
-        { name: 'Elfmeter_Eddie',  data: [4,  10, 17, 23, 28], color: '#9966ff' },
-    ];
-
-    new Chart(document.getElementById('pointsChart'), {
-        type: 'line',
-        data: {
-            labels: spieltage,
-            datasets: tipper.map(t => ({
-                label: t.name,
-                data: t.data,
-                borderColor: t.color,
-                backgroundColor: t.color + '20',
-                borderWidth: 3,
-                pointRadius: 5,
-                pointBackgroundColor: t.color,
-                fill: false,
-                tension: 0.3
-            }))
-        },
-        options: {
-            responsive: true,
-            interaction: { mode: 'index', intersect: false },
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        color: '#ccc',
-                        font: { size: 13 },
-                        padding: 15,
-                        usePointStyle: true
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: { color: '#aaa', font: { size: 13 } },
-                    grid: { color: 'rgba(255,255,255,0.05)' }
-                },
-                y: {
-                    beginAtZero: true,
-                    ticks: { color: '#aaa', font: { size: 13 } },
-                    grid: { color: 'rgba(255,255,255,0.08)' },
-                    title: {
-                        display: true,
-                        text: 'Punkte',
-                        color: '#aaa',
-                        font: { size: 14 }
-                    }
+        // === Methode 1: Auto-Unlock per URL-Hash ===
+        // URL: https://.../#password=MeinPasswort
+        (async function() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#password=')) {
+                const pwd = decodeURIComponent(hash.substring('#password='.length));
+                showLoading();
+                try {
+                    await doDecrypt(pwd);
+                    return;
+                } catch(e) {
+                    hideLoading();
                 }
             }
-        }
-    });
-</script>
 
+            // === Methode 2: Gespeichertes Passwort (localStorage) ===
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    if (data.expires > Date.now()) {
+                        showLoading();
+                        await doDecrypt(data.password);
+                        return;
+                    } else {
+                        localStorage.removeItem(STORAGE_KEY);
+                    }
+                } catch(e) {
+                    hideLoading();
+                }
+            }
+        })();
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('pwd').style.display = 'none';
+            document.querySelector('button').style.display = 'none';
+            document.querySelector('.remember').style.display = 'none';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('pwd').style.display = 'block';
+            document.querySelector('button').style.display = 'block';
+            document.querySelector('.remember').style.display = 'block';
+        }
+
+        async function decrypt() {
+            const pwd = document.getElementById('pwd').value;
+            if (!pwd) return;
+            showLoading();
+            try {
+                await doDecrypt(pwd);
+                if (document.getElementById('remember').checked) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                        password: pwd,
+                        expires: Date.now() + 30*24*60*60*1000
+                    }));
+                }
+            } catch(e) {
+                hideLoading();
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('pwd').value = '';
+                document.getElementById('pwd').focus();
+            }
+        }
+
+        async function doDecrypt(password) {
+            const salt = Uint8Array.from(atob(PAYLOAD.salt), c => c.charCodeAt(0));
+            const iv = Uint8Array.from(atob(PAYLOAD.iv), c => c.charCodeAt(0));
+            const ct = Uint8Array.from(atob(PAYLOAD.ct), c => c.charCodeAt(0));
+
+            const keyMaterial = await crypto.subtle.importKey(
+                'raw',
+                new TextEncoder().encode(password),
+                'PBKDF2',
+                false,
+                ['deriveKey']
+            );
+
+            const key = await crypto.subtle.deriveKey(
+                {
+                    name: 'PBKDF2',
+                    salt: salt,
+                    iterations: PAYLOAD.iter,
+                    hash: 'SHA-256'
+                },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['decrypt']
+            );
+
+            const decrypted = await crypto.subtle.decrypt(
+                { name: 'AES-GCM', iv: iv },
+                key,
+                ct
+            );
+
+            const html = new TextDecoder().decode(decrypted);
+            document.open();
+            document.write(html);
+            document.close();
+        }
+    </script>
 </body>
 </html>
